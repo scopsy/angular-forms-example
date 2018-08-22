@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PizzaListItemComponent } from './pizza-list-item.component';
+import { PizzaSizePickerComponent } from './pizza-size-picker.component';
 
-describe('PizzaListItemComponent', () => {
-  let component: PizzaListItemComponent;
-  let fixture: ComponentFixture<PizzaListItemComponent>;
+describe('PizzaSizePickerComponent', () => {
+  let component: PizzaSizePickerComponent;
+  let fixture: ComponentFixture<PizzaSizePickerComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PizzaListItemComponent ]
+      declarations: [ PizzaSizePickerComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PizzaListItemComponent);
+    fixture = TestBed.createComponent(PizzaSizePickerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

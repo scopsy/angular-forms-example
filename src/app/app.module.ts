@@ -1,4 +1,14 @@
-import { MatToolbarModule } from '@angular/material';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  MatButtonModule,
+  MatCheckboxModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatSelectModule,
+  MatToolbarModule
+} from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -8,8 +18,8 @@ import { PizzaFormContainerComponent } from './containers/pizza-form-container/p
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SelectedPizzaViewerComponent } from './components/selected-pizza-viewer/selected-pizza-viewer.component';
 import { PizzaListComponent } from './components/pizza-list/pizza-list.component';
-import { PizzaListItemComponent } from './components/pizza-list-item/pizza-list-item.component';
 import { CustomerDetailsComponent } from './components/customer-details/customer-details.component';
+import { PizzaSizePickerComponent } from './components/pizza-size-picker/pizza-size-picker.component';
 
 @NgModule({
   declarations: [
@@ -18,10 +28,19 @@ import { CustomerDetailsComponent } from './components/customer-details/customer
     NavbarComponent,
     SelectedPizzaViewerComponent,
     PizzaListComponent,
-    PizzaListItemComponent,
-    CustomerDetailsComponent
+    CustomerDetailsComponent,
+    PizzaSizePickerComponent
   ],
   imports: [
+    ReactiveFormsModule,
+    FormsModule,
+    MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatIconModule,
+    MatListModule,
     MatToolbarModule,
     BrowserModule,
     BrowserAnimationsModule

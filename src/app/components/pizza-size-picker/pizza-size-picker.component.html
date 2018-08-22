@@ -1,0 +1,22 @@
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="PizzaSizePicker">
+      <div class="PizzaSizePicker__item"
+           (click)="changeSize(PizzaSizeEnum.SMALL)"
+           [ngClass]="{'PizzaSizePicker__item--active': pizzaSize === PizzaSizeEnum.SMALL}">
+        SMALL
+      </div>
+      <div class="PizzaSizePicker__item"
+           (click)="changeSize(PizzaSizeEnum.MEDIUM)"
+           [ngClass]="{'PizzaSizePicker__item--active': pizzaSize === PizzaSizeEnum.MEDIUM}">
+        MEDIUM
+      </div>
+      <div class="PizzaSizePicker__item"
+           (click)="changeSize(PizzaSizeEnum.LARGE)"
+           [ngClass]="{'PizzaSizePicker__item--active': pizzaSize === PizzaSizeEnum.LARGE}">
+        LARGE
+      </div>
+    </div>
+  </div>
+</div>

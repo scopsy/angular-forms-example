@@ -1,3 +1,29 @@
-<p>
-  selected-pizza-viewer works!
-</p>
+<div class="PizzaSelectorView" [ngClass]="{ 'PizzaSelectorView--empty': !selectedPizzaGroup }">
+  <div class="row" *ngIf="selectedPizzaGroup" [formGroup]="selectedPizzaGroup">
+    <div class="col-md-6 offset-md-3">
+      <app-pizza-size-picker formControlName="size"></app-pizza-size-picker>
+    </div>
+    <div class="col-md-12 mg-top-15">
+      <h5>Toppings</h5>
+      <div class="ToppingsSelector" formArrayName="toppings">
+        <div class="ToppingsSelector__item" *ngFor="let topping of toppingsArray.controls" [formGroup]="topping" >
+          <mat-checkbox [formControl]="topping.get('selected')">
+            {{topping.get('name').value}}
+          </mat-checkbox>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="!selectedPizzaGroup" style="height: 100%">
+    <div class="PizzaSelectorView__no-selected">
+      <h4>
+        You have not selected any pizzas yet.
+      </h4>
+      <button mat-button  color="primary" (click)="addPizza.emit()">
+        <mat-icon>add_circle</mat-icon>
+        Add one
+      </button>
+    </div>
+  </div>
+</div>
+

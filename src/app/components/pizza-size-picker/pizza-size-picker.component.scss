@@ -1,0 +1,27 @@
+.PizzaSizePicker {
+  max-width: 700px;
+  display: flex;
+
+  .PizzaSizePicker__item {
+    flex: 1;
+    border: 1px solid #bdaaff;
+    border-right: none;
+    padding: 15px;
+    text-align: center;
+    transition: .3s all ease-in;
+
+    &:last-child {
+      border-right: 1px solid #bdaaff;
+    }
+
+    &:hover {
+      cursor: pointer;
+      background: #dac9ff;
+    }
+
+    &.PizzaSizePicker__item--active {
+      background: #673ab7;
+      color: white;
+    }
+  }
+}

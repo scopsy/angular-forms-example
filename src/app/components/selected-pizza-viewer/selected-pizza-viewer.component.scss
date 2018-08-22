@@ -1,0 +1,41 @@
+
+.PizzaSelectorView {
+  min-height: 300px;
+  margin-bottom: 15px;
+  background: #f1f1f1;
+  padding: 15px;
+
+  &.PizzaSelectorView--empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .PizzaSelectorView__no-selected {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    h4 {
+      font-weight: 200;
+      text-align: center;
+      font-size: 40px;
+    }
+  }
+}
+
+
+.ToppingsSelector {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 15px;
+
+  .ToppingsSelector__item {
+    margin-right: 15px;
+  }
+}

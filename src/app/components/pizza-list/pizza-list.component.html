@@ -1,3 +1,32 @@
-<p>
-  pizza-list works!
-</p>
+
+<div class="row" [formGroup]="group">
+  <div class="col-md-12">
+    <div class="PizzaList">
+      <div class="PizzaList__title">
+        <h2>
+          Pizzas order
+        </h2>
+      </div>
+      <div class="PizzaList__content" formArrayName="pizzas">
+        <div class="PizzaList__item"
+             *ngFor="let pizza of pizzasArray.controls; let i = index;"
+             [ngClass]="{'PizzaList__item--active': group.get('selectedPizza').value === i}"
+             (click)="pizzaSelected.emit(i)"
+             [formGroup]="pizza">
+          <span>
+            {{getPizzaTitle(pizza.value)}}
+          </span>
+
+          <button mat-icon-button (click)="deletePizza.emit(i); $event.stopPropagation()">
+            <mat-icon class="PizzaList__item__icon">remove_circle</mat-icon>
+          </button>
+        </div>
+
+        <div class="PizzaList__item PizzaList__item--add" (click)="addPizza.emit()">
+          <mat-icon class="PizzaList__item__icon">add_circle</mat-icon>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

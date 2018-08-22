@@ -1,0 +1,54 @@
+.PizzaList {
+  .PizzaList__item {
+    border: 1px solid #f1f1f1;
+    padding: 15px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    > span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &:hover {
+      box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+      border: 1px solid #ededed;
+      background: #f1f1f1;
+      cursor: pointer;
+
+      .PizzaList__item__icon {
+        color: #D42434;
+      }
+    }
+
+    &.PizzaList__item--active {
+      background: #673ab7;
+
+      span,
+      .PizzaList__item__icon {
+        color: white;
+      }
+    }
+
+    &.PizzaList__item--add {
+      justify-content: center;
+
+      &:hover {
+        .PizzaList__item__icon {
+          color: #673ab7;
+          transform: rotate(90deg);
+        }
+      }
+    }
+
+    .PizzaList__item__icon {
+      transition: all .3s cubic-bezier(.25,.8,.25,1);
+      color: #b6b6b6;
+    }
+  }
+}

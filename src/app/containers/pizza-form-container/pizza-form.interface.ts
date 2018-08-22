@@ -5,7 +5,10 @@ export interface IPizzaFormInterface {
 
 export interface IPizzaItem {
   size: PizzaSizeEnum;
-  toppings: PizzaToppingsEnum[];
+  toppings: {
+    name: string;
+    selected: boolean;
+  }[];
   name: string;
   crunchType: 'normal' | 'cheeseFilling' | 'thick';
 }
@@ -27,14 +30,3 @@ export enum PizzaSizeEnum {
   MEDIUM = 2,
   LARGE = 3
 }
-
-export enum PizzaToppingsEnum {
-  PAPPERONI = 1,
-  OLIVES = 2,
-  SALAMI = 3,
-  CORN = 4,
-  ONIONS = 5,
-  MUSHROOMS = 6,
-  BACON = 7
-}
-
