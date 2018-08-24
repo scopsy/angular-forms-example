@@ -7,18 +7,6 @@ import { IPizzaFormInterface, IToppingItem, PizzaSizeEnum, PizzaToppingsEnum } f
 export class PizzaFormService {
   public availableToppings = [...Object.values(PizzaToppingsEnum)];
   public form: FormGroup;
-  public get pizzasArray(): FormArray {
-    return this.form.get('pizzas') as FormArray;
-  }
-
-  public get isValid(): boolean {
-    if (!this.form.valid) {
-      this.pizzaValidatorsService.validateAllFormFields(this.form);
-      return false;
-    }
-
-    return true;
-  }
 
   constructor(
     private pizzaValidatorsService: PizzaFormValidatorsService,
@@ -31,6 +19,19 @@ export class PizzaFormService {
     }, {
       validator: this.pizzaValidatorsService.formValidator()
     });
+  }
+
+  get pizzasArray(): FormArray {
+    return this.form.get('pizzas') as FormArray;
+  }
+
+  get isValid(): boolean {
+    if (!this.form.valid) {
+      this.pizzaValidatorsService.validateAllFormFields(this.form);
+      return false;
+    }
+
+    return true;
   }
 
   selectPizzaForEdit(index: number) {
@@ -47,20 +48,18 @@ export class PizzaFormService {
     return group;
   }
 
-  deletePizza(index: number) {
+  deletePizza(index: number): void {
     this.pizzasArray.removeAt(index);
     this.form.markAsDirty();
   }
 
   getPizzaFormGroup(size: PizzaSizeEnum = PizzaSizeEnum.MEDIUM): FormGroup {
-    const group = this.fb.group({
+    return this.fb.group({
       size: [size],
       toppings: this.mapArrayToGroup(this.availableToppings)
     }, {
       validator: this.pizzaValidatorsService.pizzaItemValidator()
     });
-
-    return group;
   }
 
   /**

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { PIZZA_FORM_PROVIDERS } from './pizza-form-container.consts';
 import { DEMO_PIZZA } from './services/demo-pizza-item';
+import { PizzaFormValidatorsService } from './services/pizza-form-validators.service';
 import { IPizzaFormInterface } from './services/pizza-form.interface';
 import { PizzaFormService } from './services/pizza-form.service';
 import { PizzaLoaderService } from './services/pizza-loader.service';
@@ -10,7 +10,11 @@ import { PizzaLoaderService } from './services/pizza-loader.service';
   selector: 'app-pizza-form-container',
   templateUrl: './pizza-form-container.component.html',
   styleUrls: ['./pizza-form-container.component.scss'],
-  providers: [...PIZZA_FORM_PROVIDERS]
+  providers: [
+    PizzaFormService,
+    PizzaFormValidatorsService,
+    PizzaLoaderService
+  ]
 })
 export class PizzaFormContainerComponent implements OnInit {
   editMode = false;
