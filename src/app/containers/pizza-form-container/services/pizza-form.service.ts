@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { ValidateFn } from '../../../../node_modules/codelyzer/walkerFactory/walkerFn';
-import { IPizzaFormInterface, PizzaSizeEnum } from './pizza-form.interface';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { PizzaFormValidatorsService } from './pizza-form-validators.service';
+import { IPizzaFormInterface, IToppingItem, PizzaSizeEnum, PizzaToppingsEnum } from './pizza-form.interface';
 
 @Injectable()
 export class PizzaFormService {
-  public availableToppings = ['Sausage', 'Pepperoni', 'Ham', 'Olives', 'Bacon', 'Corn', 'Pineapple', 'Mushrooms'];
+  public availableToppings = [...Object.values(PizzaToppingsEnum)];
   public form: FormGroup;
   public get pizzasArray(): FormArray {
     return this.form.get('pizzas') as FormArray;
@@ -13,7 +13,7 @@ export class PizzaFormService {
 
   public get isValid(): boolean {
     if (!this.form.valid) {
-      this.validateAllFormFields(this.form);
+      this.pizzaValidatorsService.validateAllFormFields(this.form);
       return false;
     }
 
@@ -21,6 +21,7 @@ export class PizzaFormService {
   }
 
   constructor(
+    private pizzaValidatorsService: PizzaFormValidatorsService,
     private fb: FormBuilder
   ) {
     this.form = this.fb.group({
@@ -28,7 +29,7 @@ export class PizzaFormService {
       pizzas: this.fb.array([]),
       customerDetails: this.customerDetailsFormGroup
     }, {
-      validator: this.formValidator
+      validator: this.pizzaValidatorsService.formValidator()
     });
   }
 
@@ -36,32 +37,14 @@ export class PizzaFormService {
     this.form.get('selectedPizza').setValue(index);
   }
 
-  formValidator: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
-    const errors: ValidationErrors = {};
+  addPizza(): FormGroup {
+    const group = this.getPizzaFormGroup();
+    this.pizzasArray.push(group);
 
-    if (!(control.get('pizzas') as FormArray).length) {
-      errors.noPizzas = true;
-    }
-
-    return Object.keys(errors).length ? errors : null;
-  }
-
-  validateAllFormFields(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach(field => {
-      const control = formGroup.get(field);
-
-      if (control instanceof FormControl) {
-        control.markAsTouched({ onlySelf: true });
-      } else if (control instanceof FormGroup) {
-        this.validateAllFormFields(control);
-      }
-    });
-  }
-
-  addPizza() {
-    this.pizzasArray.push(this.getPizzaFormGroup());
     this.selectPizzaForEdit(this.pizzasArray.length - 1);
     this.form.markAsDirty();
+
+    return group;
   }
 
   deletePizza(index: number) {
@@ -72,18 +55,38 @@ export class PizzaFormService {
   getPizzaFormGroup(size: PizzaSizeEnum = PizzaSizeEnum.MEDIUM): FormGroup {
     const group = this.fb.group({
       size: [size],
-      toppings: this.mapArrayToGroup(this.availableToppings),
-      name: [''],
-      crunchType: ['normal']
+      toppings: this.mapArrayToGroup(this.availableToppings)
+    }, {
+      validator: this.pizzaValidatorsService.pizzaItemValidator()
     });
 
     return group;
   }
 
-  loadForEdit(data: IPizzaFormInterface): void {
-    this.form.patchValue({
-      ...data
-    });
+  /**
+   * Creates a pizza DTO Object using the server pizza interface
+   * In this example it is the same except the toppings array,
+   * so for simplicity i used the same interface,
+   * usually the return object will be of different type
+   */
+  createPizzaOrderDto(data: IPizzaFormInterface): IPizzaFormInterface {
+    const order = {
+      customerDetails: data.customerDetails,
+      pizzas: data.pizzas
+    };
+
+    for (const pizza of order.pizzas) {
+      pizza.toppings = this.getSelectedToppings(pizza.toppings as IToppingItem[])
+        .map((i) => {
+          return i.name;
+        });
+    }
+
+    return order;
+  }
+
+  getSelectedToppings(toppings: IToppingItem[]): IToppingItem[] {
+    return toppings.filter(i => i.selected);
   }
 
   private mapArrayToGroup(data: string[]): FormArray {

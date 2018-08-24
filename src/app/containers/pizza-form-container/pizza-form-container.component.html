@@ -1,7 +1,9 @@
 <div class="container content" [formGroup]="form">
   <div class="row">
-    <div *ngIf="form.errors?.noPizzas && (form.touched || form.dirty)" class="ValidationErrorLabel">
-      You must select at least one pizza.
+    <div class="col-md-12">
+      <div *ngIf="form.errors?.noPizzas && form.dirty" class="ValidationErrorLabel mg-bottom-15">
+        {{form.errors?.noPizzas.message}}
+      </div>
     </div>
   </div>
   <div class="row">

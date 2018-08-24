@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
-import { IPizzaFormInterface } from './pizza-form.interface';
-import { PizzaFormService } from './pizza-form.service';
+import { AbstractControl, FormGroup } from '@angular/forms';
+import { PIZZA_FORM_PROVIDERS } from './pizza-form-container.consts';
+import { DEMO_PIZZA } from './services/demo-pizza-item';
+import { IPizzaFormInterface } from './services/pizza-form.interface';
+import { PizzaFormService } from './services/pizza-form.service';
+import { PizzaLoaderService } from './services/pizza-loader.service';
 
 @Component({
   selector: 'app-pizza-form-container',
   templateUrl: './pizza-form-container.component.html',
   styleUrls: ['./pizza-form-container.component.scss'],
-  providers: [PizzaFormService]
+  providers: [...PIZZA_FORM_PROVIDERS]
 })
 export class PizzaFormContainerComponent implements OnInit {
   editMode = false;
@@ -22,16 +25,15 @@ export class PizzaFormContainerComponent implements OnInit {
   }
 
   constructor(
+    private pizzaLoaderService: PizzaLoaderService,
     private pizzaFormService: PizzaFormService
   ) { }
 
   ngOnInit() {
+    // here you can check the page url if a pizza order id was specified
+    // and load it from the server
     if (this.editMode) {
-      const demoData: IPizzaFormInterface = {} as any;
-
-      this.pizzaFormService.loadForEdit(demoData);
-    } else {
-      this.pizzaFormService.addPizza();
+      this.pizzaLoaderService.loadPizzaForEdit(DEMO_PIZZA);
     }
   }
 
@@ -40,7 +42,13 @@ export class PizzaFormContainerComponent implements OnInit {
       return;
     }
 
-    // send data to server
+    const order: IPizzaFormInterface = this.pizzaFormService.createPizzaOrderDto(data);
+
+    if (this.editMode) {
+      // update api endpoint call
+    } else {
+      // create api endpoint call
+    }
   }
 
   onPizzaAdd() {

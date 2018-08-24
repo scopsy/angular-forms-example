@@ -1,5 +1,10 @@
 <div class="PizzaSelectorView" [ngClass]="{ 'PizzaSelectorView--empty': !selectedPizzaGroup }">
   <div class="row" *ngIf="selectedPizzaGroup" [formGroup]="selectedPizzaGroup">
+    <div class="col-md-12" *ngIf="selectedPizzaGroup.errors?.toppingPizzaSize">
+      <div  class="ValidationErrorLabel mg-bottom-15">
+        {{selectedPizzaGroup.errors?.toppingPizzaSize?.message}}
+      </div>
+    </div>
     <div class="col-md-6 offset-md-3">
       <app-pizza-size-picker formControlName="size"></app-pizza-size-picker>
     </div>

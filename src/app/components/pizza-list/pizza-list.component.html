@@ -10,7 +10,7 @@
       <div class="PizzaList__content" formArrayName="pizzas">
         <div class="PizzaList__item"
              *ngFor="let pizza of pizzasArray.controls; let i = index;"
-             [ngClass]="{'PizzaList__item--active': group.get('selectedPizza').value === i}"
+             [ngClass]="getPizzaListItemClassStates(pizza, i)"
              (click)="pizzaSelected.emit(i)"
              [formGroup]="pizza">
           <span>
@@ -26,7 +26,6 @@
           <mat-icon class="PizzaList__item__icon">add_circle</mat-icon>
         </div>
       </div>
-
     </div>
   </div>
 </div>

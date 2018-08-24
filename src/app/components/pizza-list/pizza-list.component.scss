@@ -35,6 +35,10 @@
       }
     }
 
+    &.PizzaList__item--has-error {
+      border: 1px solid #D42434;
+    }
+
     &.PizzaList__item--add {
       justify-content: center;
 

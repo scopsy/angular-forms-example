@@ -1,6 +1,6 @@
 import { Component, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { PizzaSizeEnum } from '../../containers/pizza-form-container/pizza-form.interface';
+import { PizzaSizeEnum } from '../../containers/pizza-form-container/services/pizza-form.interface';
 
 @Component({
   selector: 'app-pizza-size-picker',

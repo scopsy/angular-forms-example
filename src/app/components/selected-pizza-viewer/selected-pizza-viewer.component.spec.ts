@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { APP_MODULE_DECLARATIONS, APP_MODULE_IMPORTS } from '../../app.module.deps';
 
 import { SelectedPizzaViewerComponent } from './selected-pizza-viewer.component';
 
@@ -8,7 +9,8 @@ describe('SelectedPizzaViewerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SelectedPizzaViewerComponent ]
+      imports: [...APP_MODULE_IMPORTS],
+      declarations: [ ...APP_MODULE_DECLARATIONS ]
     })
     .compileComponents();
   }));
