@@ -13,9 +13,19 @@ export class PizzaFormService {
     private fb: FormBuilder
   ) {
     this.form = this.fb.group({
-      selectedPizza: [],
+      selectedPizza: null,
       pizzas: this.fb.array([]),
-      customerDetails: this.customerDetailsFormGroup
+      customerDetails: this.fb.group({
+        firstName: [null, Validators.required],
+        lastName: [null, Validators.required],
+        phoneNumber: [null, Validators.required],
+        address: this.fb.group({
+          street: [null, Validators.required],
+          houseNum: [null, Validators.required],
+          city: [null, Validators.required],
+          floor: [null, Validators.required],
+        })
+      })
     }, {
       validator: this.pizzaValidatorsService.formValidator()
     });
@@ -39,13 +49,12 @@ export class PizzaFormService {
   }
 
   addPizza(): FormGroup {
-    const group = this.getPizzaFormGroup();
-    this.pizzasArray.push(group);
+    const pizzaGroup = this.getPizzaFormGroup();
+    this.pizzasArray.push(this.getPizzaFormGroup());
 
-    this.selectPizzaForEdit(this.pizzasArray.length - 1);
     this.form.markAsDirty();
 
-    return group;
+    return pizzaGroup;
   }
 
   deletePizza(index: number): void {
@@ -56,7 +65,7 @@ export class PizzaFormService {
   getPizzaFormGroup(size: PizzaSizeEnum = PizzaSizeEnum.MEDIUM): FormGroup {
     return this.fb.group({
       size: [size],
-      toppings: this.mapArrayToGroup(this.availableToppings)
+      toppings: this.mapToCheckboxArrayGroup(this.availableToppings)
     }, {
       validator: this.pizzaValidatorsService.pizzaItemValidator()
     });
@@ -88,26 +97,26 @@ export class PizzaFormService {
     return toppings.filter(i => i.selected);
   }
 
-  private mapArrayToGroup(data: string[]): FormArray {
+  resetForm() {
+    while (this.pizzasArray.length) {
+      this.pizzasArray.removeAt(0);
+    }
+
+    this.form.reset();
+  }
+
+  /**
+   * Create a mapping of a string based dataset
+   * to a form array suitable for a multi checkbox array selection.
+   * this provides a more concise solution
+   * as oppose to working with [true, false, false, true]
+   */
+  private mapToCheckboxArrayGroup(data: string[]): FormArray {
     return this.fb.array(data.map((i) => {
       return this.fb.group({
         name: i,
         selected: false
       });
     }));
-  }
-
-  private get customerDetailsFormGroup(): FormGroup {
-    return this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
-      address: this.fb.group({
-        street: ['', Validators.required],
-        houseNum: ['', Validators.required],
-        city: ['', Validators.required],
-        floor: ['', Validators.required],
-      })
-    });
   }
 }

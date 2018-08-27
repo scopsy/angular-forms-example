@@ -1,4 +1,5 @@
 export interface IPizzaFormInterface {
+  selectedPizza?: IPizzaItem;
   pizzas: IPizzaItem[];
   customerDetails: ICustomerDetails;
 }

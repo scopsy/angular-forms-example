@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { IPizzaFormInterface, IToppingItem, PizzaToppingsEnum } from './pizza-form.interface';
 import { PizzaFormService } from './pizza-form.service';
 

@@ -57,7 +57,6 @@ describe('PizzaFormService', () => {
     it('should select a pizza for edit mode', () => {
       pizzaFormService.addPizza();
       pizzaFormService.addPizza();
-      expect(pizzaFormService.form.get('selectedPizza').value).toEqual(1);
 
       pizzaFormService.selectPizzaForEdit(0);
       expect(pizzaFormService.form.get('selectedPizza').value).toEqual(0);

@@ -48,6 +48,8 @@ export class PizzaFormContainerComponent implements OnInit {
 
     const order: IPizzaFormInterface = this.pizzaFormService.createPizzaOrderDto(data);
 
+    alert(`Thanks ${order.customerDetails.firstName}, the pizza is on the way!`);
+
     if (this.editMode) {
       // update api endpoint call
     } else {
@@ -55,8 +57,13 @@ export class PizzaFormContainerComponent implements OnInit {
     }
   }
 
+  reset() {
+    this.pizzaFormService.resetForm();
+  }
+
   onPizzaAdd() {
     this.pizzaFormService.addPizza();
+    this.pizzaFormService.selectPizzaForEdit(this.pizzaFormService.pizzasArray.length - 1);
   }
 
   onPizzaDelete(index: number) {
