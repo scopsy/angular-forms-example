@@ -1,5 +1,6 @@
 import { inject, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PizzaFormValidatorsService } from './pizza-form-validators.service';
 import { PizzaToppingsEnum } from './pizza-form.interface';
 import { PizzaFormService } from './pizza-form.service';
 
@@ -9,7 +10,7 @@ describe('PizzaLoaderService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, FormsModule],
-      providers: [PizzaLoaderService, PizzaFormService]
+      providers: [PizzaLoaderService, PizzaFormService, PizzaFormValidatorsService]
     });
   });
 
